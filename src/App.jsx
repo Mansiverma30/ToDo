@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { TodoProvider } from "./contexts";
-import "./App.css";
 import TodoForm from "./components/TodoForm";
 import TodoItem from "./components/TodoItem";
 
@@ -9,6 +8,14 @@ function App() {
 
   const addTodo = (todo) => {
     setTodos((prev) => [{ id: Date.now(), ...todo }, ...prev]);
+  };
+
+  const todoDeadline = (id, todo) => {
+    console.log("deadline", id, todo);
+    // filter out the item with the matching ID and return all others
+    const newTodos = todos.filter((item) => item.id !== id);
+    // if there are no more items in the list, display an empty array
+    setTodos([...newTodos, todo]);
   };
 
   const updateTodo = (id, todo) => {
@@ -45,14 +52,24 @@ function App() {
 
   return (
     <TodoProvider
-      value={{ todos, addTodo, updateTodo, deleteTodo, toggleComplete }}
+      value={{
+        todos,
+        addTodo,
+        updateTodo,
+        deleteTodo,
+        toggleComplete,
+        todoDeadline,
+      }}
     >
       <div className="bg-[#172842] min-h-screen py-8">
-        <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
+        <div className="w-full max-w-2xl mx-auto rounded-lg px-4 py-3 text-white shadow-lg shadow-black">
           <h1 className="text-2xl font-bold text-center mb-8 mt-2">
-            Manage Your Todos
+            Task Manager
           </h1>
-          <div className="mb-4"> <TodoForm /> </div>
+          <div className="mb-4">
+            {" "}
+            <TodoForm />{" "}
+          </div>
           <div className="flex flex-wrap gap-y-3">
             {todos.map((todo) => (
               <div key={todo.id} className="w-full">

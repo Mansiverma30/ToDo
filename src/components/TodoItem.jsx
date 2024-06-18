@@ -2,19 +2,19 @@ import { useState } from "react";
 import { useTodo } from "../contexts";
 
 function TodoItem({ todo }) {
+  const [isTodoEditable, setIsTodoEditable] = useState(false);
+  const [todoMsg, setTodoMsg] = useState(todo.todo);
+  const [deadline, setDeadline] = useState(todo.deadline);
+  const { updateTodo, deleteTodo, toggleComplete } = useTodo();
 
-    const [isTodoEditable, setIsTodoEditable] = useState(false)
-    const [todoMsg, setTodoMsg] = useState(todo.todo)
-    const {updateTodo, deleteTodo, toggleComplete} = useTodo()
+  const editTodo = () => {
+    updateTodo(todo.id, { ...todo, todo: todoMsg, deadline });
+    setIsTodoEditable(false);
+  };
 
-    const editTodo = () => {
-        updateTodo(todo.id, {...todo, todo: todoMsg})
-        setIsTodoEditable(false)
-    }
-
-    const toggleCompleted = () => {
-        toggleComplete(todo.id)
-    }
+  const toggleCompleted = () => {
+    toggleComplete(todo.id);
+  };
 
   return (
     <div
@@ -35,6 +35,14 @@ function TodoItem({ todo }) {
         } ${todo.completed ? "line-through" : ""}`}
         value={todoMsg}
         onChange={(e) => setTodoMsg(e.target.value)}
+        readOnly={!isTodoEditable}
+      />
+      {/* Deadline input field */}
+      <input
+        type="date"
+        className="outline-none w-40 bg-transparent rounded-lg text-sm text-gray-700"
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
         readOnly={!isTodoEditable}
       />
       {/* Edit, Save Button */}
