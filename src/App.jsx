@@ -12,9 +12,7 @@ function App() {
 
   const todoDeadline = (id, todo) => {
     console.log("deadline", id, todo);
-    // filter out the item with the matching ID and return all others
     const newTodos = todos.filter((item) => item.id !== id);
-    // if there are no more items in the list, display an empty array
     setTodos([...newTodos, todo]);
   };
 
@@ -61,10 +59,10 @@ function App() {
         todoDeadline,
       }}
     >
-      <div className="bg-[#172842] min-h-screen py-8">
-        <div className="w-full max-w-2xl mx-auto rounded-lg px-4 py-3 text-white shadow-lg shadow-black">
+      <div className="bg-[#b5def6] min-h-screen py-8">
+        <div className="w-full max-w-2xl mx-auto rounded-lg px-4 py-3 bg-white text-black shadow-lg shadow-black">
           <h1 className="text-2xl font-bold text-center mb-8 mt-2">
-            Task Manager
+            College Work
           </h1>
           <div className="mb-4">
             {" "}
